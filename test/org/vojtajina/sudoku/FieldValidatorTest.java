@@ -1,19 +1,28 @@
 package org.vojtajina.sudoku;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class FieldValidatorTest {
 
-	@Test
-	public void testGetCleanValue() {
-		fail("Not yet implemented");
+	private IFieldValidator fv;
+	
+	@Before
+	public void setUp() throws Exception {
+		fv = new FieldValidator(9);
 	}
-
+	
 	@Test
-	public void testValidate() {
-		fail("Not yet implemented");
+	public void testComplex() {
+		assertEquals(0L, fv.getCleanValue());
+		assertFalse(fv.validate("0"));
+		assertEquals(0L, fv.getCleanValue());
+		assertTrue(fv.validate("1"));
+		assertEquals(1L, fv.getCleanValue());
+		assertFalse(fv.validate("10"));
+		assertEquals(0L, fv.getCleanValue());
 	}
 
 }

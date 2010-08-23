@@ -16,7 +16,18 @@ public class FieldValidator implements IFieldValidator {
 
 	@Override
 	public boolean validate(String input) {
-		// TODO Auto-generated method stub
+		try {
+			int val = Integer.parseInt(input);
+			
+			if (val > 0 && val <= range) {
+				value = val;
+				return true;
+			}
+		}
+		catch (NumberFormatException e) {
+		}
+		
+		value = 0;
 		return false;
 	}
 
