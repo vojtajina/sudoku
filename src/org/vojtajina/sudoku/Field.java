@@ -12,40 +12,50 @@ public class Field implements IField {
 			choices.add(i);
 	}
 	
+	private Field() {
+	}
+	
 	@Override
 	public int getChoicesSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return choices.size();
 	}
 
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
+		if (choices.size() == 1)
+			return choices.get(0);
+
 		return 0;
 	}
 
 	@Override
 	public boolean isSolved() {
-		// TODO Auto-generated method stub
-		return false;
+		return choices.size() == 1;
 	}
 
 	@Override
 	public void setValue(int val) {
-		// TODO Auto-generated method stub
-
+		choices.clear();
+		choices.add(val);
 	}
 
 	@Override
 	public boolean unsetChoice(int val) {
-		// TODO Auto-generated method stub
+		if (choices.contains(val)) {
+			choices.remove((Integer)val);
+			return true;
+		}
+
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public IField clone() {
-		// TODO implement
-		return this;
+		Field field = new Field();
+		field.choices = (ArrayList<Integer>) choices.clone();
+
+		return field;
 	}
 
 }
