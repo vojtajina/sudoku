@@ -1,7 +1,7 @@
 package org.vojtajina.sudoku;
 
+import java.util.List;
 import javax.swing.JFrame;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public class Start {
@@ -11,13 +11,15 @@ public class Start {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 		int size = 9;
-		TableModel tm = new DefaultTableModel(size, size);
-		JFrame form = new MainForm(tm);
+
+		MatrixModel m = new MatrixModel(new Field(size), size);
+		JFrame form = new MainForm((TableModel)m);
+		IFieldValidator fv = new FieldValidator(size);
 		
 		@SuppressWarnings("unused")
-		Matrix app = new Matrix(tm, (IMainView)form);
+		MainLogic app = new MainLogic((IMainView) form, (List<IField>) m, fv);
 		form.setVisible(true);
 	}
 
