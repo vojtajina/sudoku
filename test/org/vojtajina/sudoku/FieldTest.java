@@ -2,38 +2,54 @@ package org.vojtajina.sudoku;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class FieldTest {
 
+	private IField field;
+	
+	@Before
+	public void setUp() throws Exception {
+		field = new Field(9);
+	}
+	
 	@Test
 	public void testGetChoicesSize() {
-		fail("Not yet implemented");
+		assertEquals(9L, (long)field.getChoicesSize());
 	}
 
 	@Test
 	public void testGetValue() {
-		fail("Not yet implemented");
+		assertEquals(0L, (long)field.getValue());
 	}
 
 	@Test
 	public void testIsSolved() {
-		fail("Not yet implemented");
+		assertFalse(field.isSolved());
+		field.setValue(1);
+		assertTrue(field.isSolved());
 	}
 
 	@Test
 	public void testSetValue() {
-		fail("Not yet implemented");
+		assertEquals(0L, field.getValue());
+		field.setValue(3);
+		assertEquals(3L, field.getValue());
 	}
 
 	@Test
 	public void testUnsetChoice() {
-		fail("Not yet implemented");
+		assertTrue(field.unsetChoice(2));
+		assertFalse(field.unsetChoice(2));
 	}
 
 	@Test
 	public void testClone() {
-		fail("Not yet implemented");
+		IField f = field.clone();
+		f.setValue(3);
+		
+		assertFalse(field.isSolved());
 	}
 
 }
