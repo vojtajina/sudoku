@@ -1,5 +1,7 @@
 package org.vojtajina.sudoku;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -8,16 +10,19 @@ import java.util.ListIterator;
 
 import javax.swing.table.AbstractTableModel;
 
-public class MatrixModel extends AbstractTableModel implements List<IField> {
+public class MatrixModel extends AbstractTableModel implements List<IField>, ActionListener {
 	
 	private static final long serialVersionUID = 63L;
-	private List<IField> fields = null; 
+	private List<IField> fields; 
 	private int size;
+	private RowIndexConverter converter;
 
-	public MatrixModel(IField field, int size) {
+	public MatrixModel(IField field, RowIndexConverter conv, int size) {
 		fields = new ArrayList<IField>(size*size);
 		this.size = size;
+		converter = conv;
 		
+		field.addActionListener(this);
 		fields.add(field);
 		for (int i = 1; i < size*size; i++)
 			fields.add(field.clone());
@@ -175,6 +180,12 @@ public class MatrixModel extends AbstractTableModel implements List<IField> {
 		int val = fields.get(arg0 * size + arg1).getValue();
 		
 		return val > 0 ? val : null; 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		IField f = (IField) e.getSource();
+		fireTableCellUpdated(converter.getRow(f.getIndex()), converter.getCol(f.getIndex()));
 	}
 
 }
