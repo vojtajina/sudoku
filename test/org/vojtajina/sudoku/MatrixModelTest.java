@@ -1,6 +1,11 @@
 package org.vojtajina.sudoku;
 
 import static org.junit.Assert.*;
+import static org.easymock.EasyMock.*;
+
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,11 +16,6 @@ public class MatrixModelTest {
 	@Before
 	public void setUp() throws Exception {
 		model = new MatrixModel(new Field(9), 9);
-	}
-	
-	@Test
-	public void testGet() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -39,7 +39,15 @@ public class MatrixModelTest {
 
 	@Test
 	public void testFireTableCellUpdated() {
-		fail("Not yet implemented");
+		Field f = new Field(9);
+		model = new MatrixModel(f, 9);
+		
+		TableModelListener mockListener = createMock(TableModelListener.class);
+		mockListener.tableChanged(anyObject(TableModelEvent.class));
+		model.addTableModelListener(mockListener);
+		replay(mockListener);
+		f.setValue(2);
+		verify(mockListener);
 	}
 
 }
