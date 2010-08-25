@@ -11,14 +11,15 @@ import javax.swing.table.AbstractTableModel;
 public class MatrixModel extends AbstractTableModel implements List<IField> {
 	
 	private static final long serialVersionUID = 63L;
-	
 	private List<IField> fields = null; 
+	private int size;
 
 	public MatrixModel(IField field, int size) {
-		fields = new ArrayList<IField>(size);
+		fields = new ArrayList<IField>(size*size);
+		this.size = size;
 		
 		fields.add(field);
-		for (int i = 1; i < size; i++)
+		for (int i = 1; i < size*size; i++)
 			fields.add(field.clone());
 	}
 	
@@ -66,8 +67,7 @@ public class MatrixModel extends AbstractTableModel implements List<IField> {
 
 	@Override
 	public IField get(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		return fields.get(arg0);
 	}
 
 	@Override
@@ -162,20 +162,19 @@ public class MatrixModel extends AbstractTableModel implements List<IField> {
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return null;
+		int val = fields.get(arg0 * size + arg1).getValue();
+		
+		return val > 0 ? val : null; 
 	}
 
 }
