@@ -14,7 +14,7 @@ public class Start {
 
 		int size = 9;
 
-		MatrixModel m = new MatrixModel(new Field(size), size);
+		MatrixModel m = new MatrixModel(new Field(size), new RowIndexConverter(size), size);
 		JFrame form = new MainForm((TableModel)m);
 		IFieldValidator fv = new FieldValidator(size);
 		

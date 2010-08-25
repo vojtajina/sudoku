@@ -33,6 +33,20 @@ public class FieldTest {
 		field.setValue(1);
 		assertTrue(field.isSolved());
 	}
+	
+	@Test
+	public void testIsSolved2() {
+		field = new Field(2);
+		ActionListener mockListener = createMock(ActionListener.class);
+		field.addActionListener(mockListener);
+		
+		mockListener.actionPerformed(anyObject(ActionEvent.class));
+		replay(mockListener);
+		
+		field.unsetChoice(1);
+		assertTrue(field.isSolved());
+		assertEquals(2, field.getValue());
+	}
 
 	@Test
 	public void testSetValue() {

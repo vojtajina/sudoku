@@ -23,6 +23,8 @@ public class FieldValidatorTest {
 		assertEquals(1L, fv.getCleanValue());
 		assertFalse(fv.validate("10"));
 		assertEquals(0L, fv.getCleanValue());
+		assertFalse(fv.validate("e1"));
+		assertEquals(0L, fv.getCleanValue());
 	}
 
 }
