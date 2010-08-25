@@ -1,14 +1,20 @@
 package org.vojtajina.sudoku;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Field implements IField {
 
+	private List<ActionListener> listeners;
 	private ArrayList<Integer> choices;
 	private int index;
 	
 	public Field(int range) {
+		listeners = new LinkedList<ActionListener>();
 		choices = new ArrayList<Integer>(range);
 		for (int i = 1; i <= range; i++)
 			choices.add(i);
@@ -37,14 +43,24 @@ public class Field implements IField {
 
 	@Override
 	public void setValue(int val) {
+		int oldVal = getValue();
 		choices.clear();
 		choices.add(val);
+		
+		if (getValue() != oldVal) {
+			fireValueChanged();
+		}
 	}
 
 	@Override
 	public boolean unsetChoice(int val) {
 		if (choices.contains(val)) {
 			choices.remove((Integer)val);
+			
+			if (isSolved()) {
+				fireValueChanged();
+			}
+			
 			return true;
 		}
 
@@ -56,7 +72,7 @@ public class Field implements IField {
 	public IField clone() {
 		Field field = new Field();
 		field.choices = (ArrayList<Integer>) choices.clone();
-
+		field.listeners = new LinkedList<ActionListener>();
 		return field;
 	}
 
@@ -72,14 +88,21 @@ public class Field implements IField {
 
 	@Override
 	public void addActionListener(ActionListener l) {
-		// TODO Auto-generated method stub
-		
+		listeners.add(l);
 	}
 
 	@Override
 	public void removeActionListener(ActionListener l) {
-		// TODO Auto-generated method stub
+		listeners.remove(l);
+		return;
+	}
+	
+	protected void fireValueChanged() {
+		Iterator<ActionListener> i = listeners.iterator();
+		ActionEvent e = new ActionEvent(this, 0, "");
 		
+		while (i.hasNext())
+			i.next().actionPerformed(e);
 	}
 
 }

@@ -67,19 +67,25 @@ public class FieldTest {
 		mockListener.actionPerformed(anyObject(ActionEvent.class));
 		replay(mockListener);
 		
-		// do nothing
+		// do nothing - no value change
 		field.unsetChoice(1);
 		field.unsetChoice(2);
 		
-		// now, fire event
+		// only one change
 		field.setValue(3);
-		
-		// now, do nothing
 		field.setValue(3);
-		verify(mockListener);
-		
+	}
+	
+	@Test
+	public void testFireEvent() {
+		ActionListener mockListener = createMock(ActionListener.class);
+		field.addActionListener(mockListener);
 		mockListener.actionPerformed(anyObject(ActionEvent.class));
+		expectLastCall().times(2);
 		replay(mockListener);
+		
+		// two changes
+		field.setValue(3);
 		field.setValue(4);
 	}
 	
