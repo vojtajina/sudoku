@@ -52,4 +52,18 @@ public interface IField extends Cloneable {
 	 */
 	public IField clone();
 
+	/**
+	 * Set index of the field
+	 * 
+	 * @param idx New index of the field
+	 */
+	public void setIndex(int idx);
+
+	/**
+	 * Get the index of the field
+	 * 
+	 * @return Index
+	 */
+	public int getIndex();
+
 }

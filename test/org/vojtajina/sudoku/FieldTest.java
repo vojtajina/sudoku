@@ -48,8 +48,13 @@ public class FieldTest {
 	public void testClone() {
 		IField f = field.clone();
 		f.setValue(3);
-		
 		assertFalse(field.isSolved());
+	}
+	
+	@Test
+	public void testGetSetIndex() {
+		field.setIndex(10);
+		assertEquals(10, field.getIndex());
 	}
 
 }

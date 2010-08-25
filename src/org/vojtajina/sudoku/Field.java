@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Field implements IField {
 
-	private ArrayList<Integer> choices; 
+	private ArrayList<Integer> choices;
+	private int index;
 	
 	public Field(int range) {
 		choices = new ArrayList<Integer>(range);
@@ -56,6 +57,16 @@ public class Field implements IField {
 		field.choices = (ArrayList<Integer>) choices.clone();
 
 		return field;
+	}
+
+	@Override
+	public int getIndex() {
+		return index;
+	}
+
+	@Override
+	public void setIndex(int idx) {
+		index = idx;
 	}
 
 }
