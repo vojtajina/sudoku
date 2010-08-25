@@ -11,20 +11,22 @@ package org.vojtajina.sudoku;
  */
 public class RowIndexConverter {
 	
+	private int size;
+	
 	public RowIndexConverter(int size) {
-		
+		this.size = size;
 	}
 	
 	public int getRow(int index) {
-		return 0;
+		return (int) Math.floor(index / size);
 	}
 	
 	public int getCol(int index) {
-		return 0;
+		return index % size;
 	}
 	
 	public int getIndex(int row, int col) {
-		return 0;
+		return row * size + col;
 	}
 
 }
