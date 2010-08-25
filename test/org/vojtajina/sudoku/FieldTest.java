@@ -49,9 +49,22 @@ public class FieldTest {
 
 	@Test
 	public void testClone() {
+		field.unsetChoice(1);
 		IField f = field.clone();
+		assertFalse(f.unsetChoice(1));
 		f.setValue(3);
 		assertFalse(field.isSolved());
+	}
+	
+	@Test
+	public void testCloneListeners() {
+		ActionListener mockListener = createMock(ActionListener.class);
+		field.addActionListener(mockListener);
+		mockListener.actionPerformed(anyObject(ActionEvent.class));
+		replay(mockListener);
+		IField f = field.clone();
+		f.setValue(1);
+		verify(mockListener);
 	}
 	
 	@Test
