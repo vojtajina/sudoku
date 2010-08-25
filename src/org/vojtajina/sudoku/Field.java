@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Field implements IField {
 
-	private List<ActionListener> listeners;
+	private LinkedList<ActionListener> listeners;
 	private ArrayList<Integer> choices;
 	private int index;
 	
@@ -72,7 +72,7 @@ public class Field implements IField {
 	public IField clone() {
 		Field field = new Field();
 		field.choices = (ArrayList<Integer>) choices.clone();
-		field.listeners = new LinkedList<ActionListener>();
+		field.listeners = (LinkedList<ActionListener>) listeners.clone();
 		return field;
 	}
 
