@@ -15,7 +15,8 @@ public class MatrixModelTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		model = new MatrixModel(new Field(9), 9);
+		RowIndexConverter mockConverter = createMock(RowIndexConverter.class);
+		model = new MatrixModel(new Field(9), mockConverter, 9);
 	}
 
 	@Test
@@ -32,20 +33,26 @@ public class MatrixModelTest {
 	public void testGetValueAt() {
 		assertNull(model.getValueAt(0, 0));
 		IField f = new Field(9);
+		RowIndexConverter mockConverter = createMock(RowIndexConverter.class);
 		f.setValue(3);
-		model = new MatrixModel(f, 1);
+		model = new MatrixModel(f, mockConverter, 1);
 		assertEquals(3, model.getValueAt(0, 0));
 	}
 
 	@Test
 	public void testFireTableCellUpdated() {
 		Field f = new Field(9);
-		model = new MatrixModel(f, 9);
+		RowIndexConverter mockConverter = createMock(RowIndexConverter.class);
+		
+		expect(mockConverter.getRow(anyInt())).andStubReturn(0);
+		expect(mockConverter.getCol(anyInt())).andStubReturn(0);
+		model = new MatrixModel(f, mockConverter, 9);
 		
 		TableModelListener mockListener = createMock(TableModelListener.class);
 		mockListener.tableChanged(anyObject(TableModelEvent.class));
 		model.addTableModelListener(mockListener);
 		replay(mockListener);
+		replay(mockConverter);
 		f.setValue(2);
 		verify(mockListener);
 	}
