@@ -1,5 +1,7 @@
 package org.vojtajina.sudoku;
 
+import java.awt.event.ActionListener;
+
 /**
  * Represents one field in the matrix
  * 
@@ -65,5 +67,20 @@ public interface IField extends Cloneable {
 	 * @return Index
 	 */
 	public int getIndex();
+	
+	/**
+	 * Add listener to field action events
+	 * events: change value
+	 * 
+	 * @param l
+	 */
+	public void addActionListener(ActionListener l);
+
+	/**
+	 * Remove particular listener
+	 * 
+	 * @param l
+	 */
+	public void removeActionListener(ActionListener l);
 
 }

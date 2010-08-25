@@ -1,5 +1,6 @@
 package org.vojtajina.sudoku;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Field implements IField {
@@ -67,6 +68,18 @@ public class Field implements IField {
 	@Override
 	public void setIndex(int idx) {
 		index = idx;
+	}
+
+	@Override
+	public void addActionListener(ActionListener l) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeActionListener(ActionListener l) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

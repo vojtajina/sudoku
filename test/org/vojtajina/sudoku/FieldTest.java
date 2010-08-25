@@ -1,7 +1,10 @@
 package org.vojtajina.sudoku;
 
 import static org.junit.Assert.*;
+import static org.easymock.EasyMock.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,6 +58,38 @@ public class FieldTest {
 	public void testGetSetIndex() {
 		field.setIndex(10);
 		assertEquals(10, field.getIndex());
+	}
+	
+	@Test
+	public void testAddListener() {
+		ActionListener mockListener = createMock(ActionListener.class);
+		field.addActionListener(mockListener);
+		mockListener.actionPerformed(anyObject(ActionEvent.class));
+		replay(mockListener);
+		
+		// do nothing
+		field.unsetChoice(1);
+		field.unsetChoice(2);
+		
+		// now, fire event
+		field.setValue(3);
+		
+		// now, do nothing
+		field.setValue(3);
+		verify(mockListener);
+		
+		mockListener.actionPerformed(anyObject(ActionEvent.class));
+		replay(mockListener);
+		field.setValue(4);
+	}
+	
+	@Test
+	public void testRemoveListener() {
+		ActionListener mockListener = createMock(ActionListener.class);
+		field.addActionListener(mockListener);
+		field.removeActionListener(mockListener);
+		replay(mockListener);
+		field.setValue(3);
 	}
 
 }
