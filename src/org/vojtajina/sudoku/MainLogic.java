@@ -12,13 +12,15 @@ public class MainLogic implements IMainViewListener {
 	private IMainView view;
 	private IMatrixModel<IField> fields;
 	private IUniqueChecker<Integer> checker;
+	private int size;
 	
-	public MainLogic(IMainView view, IMatrixModel<IField> fields, IUniqueChecker<Integer> checker) {
+	public MainLogic(IMainView view, IMatrixModel<IField> fields, IUniqueChecker<Integer> checker, int size) {
 		view.addListener(this);
 		
 		this.view = view;
 		this.fields = fields;
 		this.checker = checker;
+		this.size = size;
 	}
 
 	@Override
@@ -30,7 +32,18 @@ public class MainLogic implements IMainViewListener {
 	}
 	
 	public boolean checkRow(int row) {
-		return false;
+		boolean error = false;
+		int value;
+		checker.reset();
+		
+		for (int col = 0; col < size; col++) {
+			value = fields.get(row, col).getValue();
+			
+			if (value > 0 && !checker.check(value))
+				error = true;
+		}
+		
+		return !error;
 	}
 	
 	public boolean checkCol(int col) {
