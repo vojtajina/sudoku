@@ -14,9 +14,9 @@ public class Start {
 
 		int size = 9;
 
-		MatrixModel m = new MatrixModel(new Field(size), new RowIndexConverter(size), size);
-		JFrame form = new MainForm((TableModel)m);
 		IFieldValidator fv = new FieldValidator(size);
+		MatrixModel m = new MatrixModel(new Field(size), new RowIndexConverter(size), fv, size);
+		JFrame form = new MainForm((TableModel)m);
 		
 		@SuppressWarnings("unused")
 		MainLogic app = new MainLogic((IMainView) form, (List<IField>) m, fv);

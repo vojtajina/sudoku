@@ -16,11 +16,13 @@ public class MatrixModel extends AbstractTableModel implements List<IField>, Act
 	private List<IField> fields; 
 	private int size;
 	private RowIndexConverter converter;
+	private IFieldValidator validator;
 
-	public MatrixModel(IField field, RowIndexConverter conv, int size) {
+	public MatrixModel(IField field, RowIndexConverter conv, IFieldValidator val, int size) {
 		fields = new ArrayList<IField>(size*size);
 		this.size = size;
 		converter = conv;
+		validator = val;
 		
 		field.addActionListener(this);
 		fields.add(field);
@@ -177,7 +179,7 @@ public class MatrixModel extends AbstractTableModel implements List<IField>, Act
 
 	@Override
 	public Object getValueAt(int arg0, int arg1) {
-		int val = fields.get(arg0 * size + arg1).getValue();
+		int val = fields.get(converter.getIndex(arg0, arg1)).getValue();
 		
 		return val > 0 ? val : null; 
 	}
@@ -186,6 +188,15 @@ public class MatrixModel extends AbstractTableModel implements List<IField>, Act
 	public void actionPerformed(ActionEvent e) {
 		IField f = (IField) e.getSource();
 		fireTableCellUpdated(converter.getRow(f.getIndex()), converter.getCol(f.getIndex()));
+	}
+	
+	public boolean isCellEditable(final int row, final int column) {
+		return true;
+	}
+	
+	public void setValueAt(final Object value, final int row, final int column) {
+		if (validator.validate((String)value))
+		  fields.get(converter.getIndex(row, column)).setValue(validator.getCleanValue());		
 	}
 
 }
