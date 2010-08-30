@@ -11,26 +11,34 @@ package org.vojtajina.sudoku;
  */
 public class RowIndexConverter {
 	
-	private int size;
+	private int defaultBase;
 	
-	public RowIndexConverter(int size) {
-		setBase(size);
+	public RowIndexConverter(int base) {
+		this.defaultBase = base;
 	}
 	
 	public int getRow(int index) {
-		return (int) Math.floor(index / size);
+		return getRow(index, defaultBase);
+	}
+	
+	public int getRow(int index, int base) {
+		return (int) Math.floor(index / base);
 	}
 	
 	public int getCol(int index) {
-		return index % size;
+		return getCol(index, defaultBase);
+	}
+	
+	public int getCol(int index, int base) {
+		return index % base;
 	}
 	
 	public int getIndex(int row, int col) {
-		return row * size + col;
+		return getIndex(row, col, defaultBase);
 	}
 	
-	public void setBase(int base) {
-		size = base;
+	public int getIndex(int row, int col, int base) {
+		return row * base + col;
 	}
 
 }
