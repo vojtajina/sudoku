@@ -11,7 +11,7 @@ public class UniqueCheckerIntTest {
 
 	@Before
 	public void setUp() throws Exception {
-		checker = new UniqueCheckerInt();
+		checker = new UniqueCheckerInt(9);
 	}
 
 	@Test
