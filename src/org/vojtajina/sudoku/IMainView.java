@@ -6,13 +6,6 @@ package org.vojtajina.sudoku;
  * @author Vojta Jina <vojta.jina@gmail.com>
  */
 public interface IMainView {
-	/**
-	 * Set value of specific field in the matrix
-	 * 
-	 * @param position Position of the field
-	 * @param value New value of the field
-	 */
-	public void setValue(int position, int value);
 	
 	/**
 	 * Enable or disable the form
@@ -21,4 +14,6 @@ public interface IMainView {
 	 * @param enabled Enabled if true, disabled otherwise
 	 */
 	public void setEnabled(boolean enabled);
+	
+	public void addListener(IMainViewListener l);
 }

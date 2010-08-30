@@ -3,6 +3,8 @@ package org.vojtajina.sudoku;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,7 +15,7 @@ import javax.swing.table.TableModel;
 public class MainForm extends JFrame implements IMainView {
 
 	private static final long serialVersionUID = 1L;
-	
+	private LinkedList<IMainViewListener> listeners;
 	private TableModel tableModel = null;
 	private JPanel jContentPane = null;
 	private JButton solveButton = null;
@@ -23,6 +25,7 @@ public class MainForm extends JFrame implements IMainView {
 	 */
 	public MainForm(TableModel tm) {
 		super();
+		listeners = new LinkedList<IMainViewListener>();
 		tableModel = tm;
 		initialize();
 	}
@@ -63,16 +66,19 @@ public class MainForm extends JFrame implements IMainView {
 		if (solveButton == null) {
 			solveButton = new JButton();
 			solveButton.setText("SOLVE");
+			solveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					Iterator<IMainViewListener> i = listeners.iterator();
+					while (i.hasNext())
+						i.next().solveClick(e);
+					
+					fieldsTable.updateUI();
+				}
+			});
 		}
 		return solveButton;
 	}
-
-	@Override
-	public void setValue(int position, int value) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	/**
 	 * This method initializes fieldsTable	
 	 * 	
@@ -88,6 +94,11 @@ public class MainForm extends JFrame implements IMainView {
 			fieldsTable.setIntercellSpacing(new Dimension(0, 0));
 		}
 		return fieldsTable;
+	}
+
+	@Override
+	public void addListener(IMainViewListener l) {
+		listeners.add(l);		
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
