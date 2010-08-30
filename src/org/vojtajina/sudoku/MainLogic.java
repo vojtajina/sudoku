@@ -12,14 +12,16 @@ public class MainLogic implements IMainViewListener {
 	private IMainView view;
 	private IMatrixModel<IField> fields;
 	private IUniqueChecker<Integer> checker;
+	private RowIndexConverter converter;
 	private int size;
 	
-	public MainLogic(IMainView view, IMatrixModel<IField> fields, IUniqueChecker<Integer> checker, int size) {
+	public MainLogic(IMainView view, IMatrixModel<IField> fields, IUniqueChecker<Integer> checker, RowIndexConverter converter, int size) {
 		view.addListener(this);
 		
 		this.view = view;
 		this.fields = fields;
 		this.checker = checker;
+		this.converter = converter;
 		this.size = size;
 	}
 
@@ -62,7 +64,26 @@ public class MainLogic implements IMainViewListener {
 	}
 	
 	public boolean checkBox(int box) {
-		return false;
+		int value;
+		boolean isValid = true;
+		checker.reset();
+		
+		int boxSize = (int)Math.sqrt(size);
+		int rowBase = converter.getRow(box, boxSize);
+		int colBase = converter.getCol(box, boxSize);
+		
+		rowBase = rowBase * boxSize;
+		colBase = colBase * boxSize;
+		
+		for (int a = 0; a < boxSize; a++)
+			for (int b = 0; b < boxSize; b++) {
+				value = fields.get(rowBase + a, colBase + b).getValue();
+				
+				if (value > 0 && !checker.check(value))
+					isValid = false;
+			}
+		
+		return isValid;
 	}
 	
 	public boolean check() {

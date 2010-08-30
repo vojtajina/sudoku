@@ -1,9 +1,11 @@
 package org.vojtajina.sudoku;
 
-import static org.junit.Assert.*;
-import static org.easymock.EasyMock.*;
-
-import java.awt.Checkbox;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,14 +18,16 @@ public class MainLogicTest {
 	private IMatrixModel<IField> mockMatrix;
 	private IMainView mockView;
 	private IUniqueChecker<Integer> mockChecker;
+	private RowIndexConverter mockConverter;
 
 	@Before
 	public void setUp() throws Exception {
 		mockMatrix = createMock(IMatrixModelField.class);
 		mockView = createMock(IMainView.class);
 		mockChecker = createMock(IUniqueCheckerInt.class);
+		mockConverter = createMock(RowIndexConverter.class);
 		
-		object = new MainLogic(mockView, mockMatrix, mockChecker, 9);
+		object = new MainLogic(mockView, mockMatrix, mockChecker, mockConverter, 9);
 	}
 
 	@Test
@@ -142,9 +146,14 @@ public class MainLogicTest {
 		mockChecker.reset();
 		expect(mockChecker.check(1)).andReturn(valid);
 		
+		// converter
+		expect(mockConverter.getRow(1, 3)).andReturn(0);
+		expect(mockConverter.getCol(1, 3)).andReturn(1);
+		
 		replay(mockMatrix);
 		replay(mockChecker);
 		replay(mockField);
+		replay(mockConverter);
 		
 		assertEquals(valid, object.checkBox(1));
 		verify(mockChecker);
