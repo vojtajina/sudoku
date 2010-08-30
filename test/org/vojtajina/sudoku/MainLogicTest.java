@@ -16,18 +16,16 @@ public class MainLogicTest {
 	
 	private MainLogic object;
 	private IMatrixModel<IField> mockMatrix;
-	private IMainView mockView;
 	private IUniqueChecker<Integer> mockChecker;
 	private RowIndexConverter mockConverter;
 
 	@Before
 	public void setUp() throws Exception {
 		mockMatrix = createMock(IMatrixModelField.class);
-		mockView = createMock(IMainView.class);
 		mockChecker = createMock(IUniqueCheckerInt.class);
 		mockConverter = createMock(RowIndexConverter.class);
 		
-		object = new MainLogic(mockView, mockMatrix, mockChecker, mockConverter, 9);
+		object = new MainLogic(null, mockMatrix, mockChecker, mockConverter, 9);
 	}
 
 	@Test

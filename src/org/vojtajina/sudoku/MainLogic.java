@@ -15,9 +15,7 @@ public class MainLogic implements IMainViewListener {
 	private RowIndexConverter converter;
 	private int size;
 	
-	public MainLogic(IMainView view, IMatrixModel<IField> fields, IUniqueChecker<Integer> checker, RowIndexConverter converter, int size) {
-		view.addListener(this);
-		
+	public MainLogic(IMainView view, IMatrixModel<IField> fields, IUniqueChecker<Integer> checker, RowIndexConverter converter, int size) {		
 		this.view = view;
 		this.fields = fields;
 		this.checker = checker;

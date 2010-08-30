@@ -14,13 +14,14 @@ public class Start {
 		int size = 9;
 
 		IFieldValidator fv = new FieldValidator(size);
-		MatrixModel m = new MatrixModel(new Field(size), new RowIndexConverter(size), fv, size);
-		JFrame form = new MainForm((TableModel)m);
+		RowIndexConverter c = new RowIndexConverter(size);
+		MatrixModel m = new MatrixModel(new Field(size), c, fv, size);
+		IMainView form = new MainForm((TableModel)m);
 		IUniqueChecker<Integer> ch = new UniqueCheckerInt(size);
 		
-		@SuppressWarnings("unused")
-		MainLogic app = new MainLogic((IMainView) form, (IMatrixModel<IField>) m, ch);
-		form.setVisible(true);
+		MainLogic app = new MainLogic(form, (IMatrixModel<IField>) m, ch, c, size);
+		form.addListener(app);
+		((JFrame)form).setVisible(true);
 	}
 
 }
