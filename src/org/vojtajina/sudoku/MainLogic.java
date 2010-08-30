@@ -32,22 +32,33 @@ public class MainLogic implements IMainViewListener {
 	}
 	
 	public boolean checkRow(int row) {
-		boolean error = false;
 		int value;
+		boolean isValid = true;
 		checker.reset();
 		
 		for (int col = 0; col < size; col++) {
 			value = fields.get(row, col).getValue();
 			
 			if (value > 0 && !checker.check(value))
-				error = true;
+				isValid = false;
 		}
 		
-		return !error;
+		return isValid;
 	}
 	
 	public boolean checkCol(int col) {
-		return false;
+		int value;
+		boolean isValid = true;
+		checker.reset();
+		
+		for (int row = 0; row < size; row++) {
+			value = fields.get(row, col).getValue();
+			
+			if (value > 0 && !checker.check(value))
+				isValid = false;
+		}
+		
+		return isValid;
 	}
 	
 	public boolean checkBox(int box) {

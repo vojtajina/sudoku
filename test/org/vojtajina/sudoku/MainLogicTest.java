@@ -3,6 +3,8 @@ package org.vojtajina.sudoku;
 import static org.junit.Assert.*;
 import static org.easymock.EasyMock.*;
 
+import java.awt.Checkbox;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +27,16 @@ public class MainLogicTest {
 	}
 
 	@Test
-	public final void testCheckRow() {
+	public final void testCheckRowTrue() {
+		checkRow(true);
+	}
+	
+	@Test
+	public final void testCheckRowFalse() {
+		checkRow(false);
+	}
+	
+	private void checkRow(boolean valid) {
 		IField mockField = createMock(IField.class);
 		
 		// do not care about the order of calls
@@ -45,20 +56,29 @@ public class MainLogicTest {
 		
 		// unique checker
 		mockChecker.reset();
-		expect(mockChecker.check(1)).andReturn(true);
+		expect(mockChecker.check(1)).andReturn(valid);
 		
 		replay(mockMatrix);
 		replay(mockChecker);
 		replay(mockField);
 		
-		assertTrue(object.checkRow(2));
+		assertEquals(valid, object.checkRow(2));
 		verify(mockChecker);
 		verify(mockMatrix);
 		verify(mockField);
 	}
 
 	@Test
-	public final void testCheckCol() {
+	public final void testCheckColTrue() {
+		checkCol(true);
+	}
+	
+	@Test
+	public final void testCheckColFalse() {
+		checkCol(false);
+	}
+	
+	private void checkCol(boolean valid) {
 		IField mockField = createMock(IField.class);
 		
 		// do not care about the order of calls
@@ -78,20 +98,29 @@ public class MainLogicTest {
 		
 		// unique checker
 		mockChecker.reset();
-		expect(mockChecker.check(1)).andReturn(true);
+		expect(mockChecker.check(1)).andReturn(valid);
 		
 		replay(mockMatrix);
 		replay(mockChecker);
 		replay(mockField);
 		
-		assertTrue(object.checkCol(1));
+		assertEquals(valid, object.checkCol(1));
 		verify(mockChecker);
 		verify(mockMatrix);
 		verify(mockField);
 	}
 
 	@Test
-	public final void testCheckBox() {
+	public final void testCheckBoxTrue() {
+		checkBox(true);
+	}
+	
+	@Test
+	public final void testCheckBoxFalse() {
+		checkBox(false);
+	}
+	
+	private void checkBox(boolean valid) {
 		IField mockField = createMock(IField.class);
 		
 		// do not care about the order of calls
@@ -111,13 +140,13 @@ public class MainLogicTest {
 		
 		// unique checker
 		mockChecker.reset();
-		expect(mockChecker.check(1)).andReturn(true);
+		expect(mockChecker.check(1)).andReturn(valid);
 		
 		replay(mockMatrix);
 		replay(mockChecker);
 		replay(mockField);
 		
-		assertTrue(object.checkBox(1));
+		assertEquals(valid, object.checkBox(1));
 		verify(mockChecker);
 		verify(mockMatrix);
 		verify(mockField);
