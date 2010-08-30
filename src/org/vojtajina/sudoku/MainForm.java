@@ -101,4 +101,9 @@ public class MainForm extends JFrame implements IMainView {
 		listeners.add(l);		
 	}
 
+	@Override
+	public void alert(String message) {
+		this.setTitle(message);
+	}
+
 }  //  @jve:decl-index=0:visual-constraint="10,10"

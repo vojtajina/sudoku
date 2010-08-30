@@ -16,4 +16,6 @@ public interface IMainView {
 	public void setEnabled(boolean enabled);
 	
 	public void addListener(IMainViewListener l);
+	
+	public void alert(String message);
 }

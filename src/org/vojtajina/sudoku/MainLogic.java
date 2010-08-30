@@ -25,10 +25,12 @@ public class MainLogic implements IMainViewListener {
 
 	@Override
 	public void solveClick(MouseEvent e) {
-//		view.setEnabled(false);
-//		fields.get(1).setValue(2);
-//		fields.get(4).setValue(5);
-		System.out.print("SOLVE");
+		view.setEnabled(false);
+		if (check())
+			view.alert("IS VALID");
+		else
+			view.alert("ERRORS");
+		view.setEnabled(true);
 	}
 	
 	public boolean checkRow(int row) {
@@ -84,8 +86,38 @@ public class MainLogic implements IMainViewListener {
 		return isValid;
 	}
 	
+	public boolean checkRows() {
+		boolean isValid = true;
+		
+		for (int i = 0; i < size; i ++)
+			if (!checkRow(i))
+				isValid = false;
+		
+		return isValid;
+	}
+	
+	public boolean checkCols() {
+		boolean isValid = true;
+		
+		for (int i = 0; i < size; i ++)
+			if (!checkCol(i))
+				isValid = false;
+		
+		return isValid;
+	}
+	
+	public boolean checkBoxes() {
+		boolean isValid = true;
+		
+		for (int i = 0; i < size; i ++)
+			if (!checkBox(i))
+				isValid = false;
+		
+		return isValid;
+	}
+	
 	public boolean check() {
-		return false;
+		return checkRows() && checkCols() && checkBoxes();
 	}
 
 }
