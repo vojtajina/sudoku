@@ -14,7 +14,7 @@ public class RowIndexConverter {
 	private int size;
 	
 	public RowIndexConverter(int size) {
-		this.size = size;
+		setBase(size);
 	}
 	
 	public int getRow(int index) {
@@ -27,6 +27,10 @@ public class RowIndexConverter {
 	
 	public int getIndex(int row, int col) {
 		return row * size + col;
+	}
+	
+	public void setBase(int base) {
+		size = base;
 	}
 
 }
